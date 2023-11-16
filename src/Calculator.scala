@@ -1,5 +1,3 @@
-import cats.syntax.all.*
-
 case class Calculator(
     display: Display = Display.Cleared,
     input: Option[BigDecimal] = None,
