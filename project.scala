@@ -5,6 +5,10 @@
 
 //> using dep io.indigoengine::tyrian-io_sjs1:0.8.0
 
+//> using dep net.reactivecore::kreuzberg_sjs1:0.7.0
+//> using dep net.reactivecore::kreuzberg-engine-naive_sjs1:0.7.0
+//> using dep net.reactivecore::kreuzberg-scalatags_sjs1:0.7.0
+
 //> using test.dep com.disneystreaming::weaver-cats_sjs1:0.8.3
 //> using testFramework weaver.framework.CatsEffect
 

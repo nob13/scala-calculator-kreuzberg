@@ -17,6 +17,7 @@ enum Msg:
 
 type Model = Calculator
 
+/*
 object App extends TyrianApp[Msg, Model]:
 
   override def init(flags: Map[String, String]): (Model, Cmd[IO, Msg]) =
@@ -92,3 +93,4 @@ object App extends TyrianApp[Msg, Model]:
 
   @main def launchApp(): Unit =
     launch("app")
+*/
