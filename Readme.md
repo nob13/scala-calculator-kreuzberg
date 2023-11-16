@@ -1,6 +1,8 @@
 # Scala Calculator
 
-A simple calculator app built with Scala JS and Tyrian.
+A simple calculator app built with Scala JS and Kreuzberg.
+
+**Note:** this is a fork of https://github.com/suliatis/scala-calculator but using Kreuzberg instead of Tyrian.
 
 ## Getting Started
 
