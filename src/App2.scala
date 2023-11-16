@@ -4,27 +4,13 @@ import kreuzberg.scalatags.all.*
 import kreuzberg.engine.naive.Binder
 import kreuzberg.Subscribeable
 
-case class ButtonUi(buttonText: String, clazz: String = "")
+case class ButtonUi(buttonText: Subscribeable[String], clazz: String = "")
     extends SimpleComponentBase:
 
   def assemble(using c: SimpleContext): Html =
     button(
       Some(clazz).filter(_.nonEmpty).map { cls := _ },
-      buttonText,
-    )
-
-  val onClick = jsEvent("click")
-
-// TODO: This component is not necessary when constant models are present, KRZ-171
-case class ReactiveButton(buttonText: Subscribeable[String], clazz: String = "")
-    extends SimpleComponentBase:
-
-  def assemble(using c: SimpleContext): Html =
-    // BUG: KRZ-173, This breaks the button
-    // val text = subscribe(buttonText)
-    button(
-      Some(clazz).filter(_.nonEmpty).map { cls := _ },
-      "blurb",
+      buttonText.subscribe(),
     )
 
   val onClick = jsEvent("click")
@@ -43,7 +29,7 @@ object Main2 extends SimpleComponentBase:
 
   def assemble(using c: SimpleContext): Html =
     def makeBtn(
-        label: String,
+        label: Subscribeable[String],
         clazz: String,
         op: Calculator => Calculator,
     ): ButtonUi =
@@ -57,11 +43,6 @@ object Main2 extends SimpleComponentBase:
         digit: Char,
     ): ButtonUi =
       makeBtn(digit.toString(), "", _.enterDigit(digit))
-
-    val acButton = ReactiveButton(calculator.map(_.showClear()), "")
-    add(
-      acButton.onClick.changeModelDirect(calculator)(_.clear()),
-    )
 
     div(
       cls := "base",
@@ -84,14 +65,12 @@ object Main2 extends SimpleComponentBase:
         makeDigitBtn('3'),
         makeDigitBtn('0'),
         makeBtn(".", "", _.enterDecimal()),
-        acButton,
+        makeBtn(calculator.map(_.showClear()), "", _.clear()),
       ),
     )
 
 object App2 extends App:
   given repo: ServiceRepository = ServiceRepository.extensible
-  Logger.enableDebug()
-  Logger.enableTrace()
   Binder.runOnLoaded(
     Main2,
     "app",
